@@ -35,12 +35,12 @@ public class PhotoAlbumServiceTests
     }
 
     [Theory]
-    [InlineData("100000")]
-    [InlineData("234567")]
+    [InlineData("5001")]
+    [InlineData("2147483647")]
     public void GetPhotosByAlbumId_HandlesNoResults(string? input)
     {
         PhotoAlbumService albumService = new();
-        List<string> expected = new() { EXPECTED_NO_OUTPUTS_RESPONSE + " " + input };
+        List<string> expected = new() { $"{EXPECTED_NO_OUTPUTS_RESPONSE} {input}" };
 
         IEnumerable<string> actual = albumService.GetPhotosByAlbumId(input);
 

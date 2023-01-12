@@ -8,6 +8,8 @@ namespace PhotoAlbum.App
     {
         private const string BASE_PHOTO_ALBUM_URL = @"https://jsonplaceholder.typicode.com/photos?albumId=";
         private const string BAD_INPUT_RESPONSE = "Input invalid: Please enter a numeric album id.";
+        private const string EMPTY_RESULTS = "[]";
+        private const string EMPTY_RESULTS_RESPONSE = "No photos found with given album id:";
         
         public IEnumerable<string> GetPhotosByAlbumId(string? userInput)
         {
@@ -24,8 +26,14 @@ namespace PhotoAlbum.App
             var response = client.GetStringAsync(BASE_PHOTO_ALBUM_URL + userInput);
 
             string json = response.Result;
+            if (json == EMPTY_RESULTS)
+            {
+                photos.Add($"{EMPTY_RESULTS_RESPONSE} {userInput}");
+                return photos;
+            }
+                
             var photoCollection = JsonConvert.DeserializeObject<IEnumerable<Photo>>(json);
-
+            
             if (photoCollection != null)
             {
                 foreach (Photo pic in photoCollection)
