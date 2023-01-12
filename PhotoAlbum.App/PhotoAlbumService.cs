@@ -6,8 +6,8 @@ namespace PhotoAlbum.App
         public IEnumerable<string> GetPhotosByAlbumId(string? userInput)
         {
             List<string> photos = new();
-
-            if (userInput == null || userInput == string.Empty)
+            int id = -1;
+            if (userInput == null || userInput == string.Empty || !int.TryParse(userInput, out id))
             {
                 photos.Add(BAD_INPUT_RESPONSE);
                 return photos;
