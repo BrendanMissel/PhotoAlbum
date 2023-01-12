@@ -22,4 +22,15 @@ public class PhotoAlbumServiceTests
 
         Assert.Equivalent(EXPECTED_BAD_INPUT_RESPONSE, actual);
     }
+
+    [Fact]
+    public void GetPhotosByAlbumId_ReturnsInCorrectFormat()
+    {
+        PhotoAlbumService albumService = new();
+    
+        IEnumerable<string> photos = albumService.GetPhotosByAlbumId("1");
+        string? actual = photos.FirstOrDefault();
+
+        Assert.Equal(EXPECTED_OUTPUT_PHOTO_ID_1, actual);
+    }
 }
