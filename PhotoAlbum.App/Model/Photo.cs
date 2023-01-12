@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PhotoAlbum.App.Model
+﻿namespace PhotoAlbum.App.Model
 {
-    public class Photo
+	public class Photo
     {
         public int AlbumId { get; set; }
         public int Id { get; set; }
