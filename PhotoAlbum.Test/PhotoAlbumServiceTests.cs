@@ -14,6 +14,7 @@ public class PhotoAlbumServiceTests
     [InlineData("A1")]
     [InlineData("-9")]
     [InlineData("0")]
+    [InlineData("0.0")]
     public void GetPhotosByAlbumId_HandlesBadInput(string? input)
     {
         IEnumerable<string> actual = PhotoAlbumService.GetPhotosByAlbumId(input);
