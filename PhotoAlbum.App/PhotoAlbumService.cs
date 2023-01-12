@@ -18,20 +18,15 @@ namespace PhotoAlbum.App
         /// <returns></returns>
         public static IEnumerable<string> GetPhotosByAlbumId(string? userInput)
         {
-            List<string> photos = new();
-            List<string> errors = new();
+            string error = ScrubUserInput(ref userInput);
 
-            errors = ScrubUserInput(ref userInput);
-
-            // If we encountered an error during input scrubbing, return the errors to the caller
-            if (errors.Count > 0)
+            // If we encountered an error during input scrubbing, return the error to the caller
+            if (error != string.Empty)
             {
-                return errors;
+                return new List<string>() { error };
             }
 
-            photos = RequestPhotosInSpecifiedId(userInput);
-
-            return photos;
+            return RequestPhotosInSpecifiedId(userInput);
         }
 
         /// <summary>
@@ -48,12 +43,10 @@ namespace PhotoAlbum.App
             var response = client.GetStringAsync(BASE_PHOTO_ALBUM_URL + scrubbedInput);
             string json = response.Result;
 
-            // Empty results likely indicate the id a valid format but too large for the 
-            // given dataset.
+            // Empty results likely indicate the id a valid format but too large for the given dataset.
             if (json == EMPTY_RESULTS)
             {
-                photosReceived.Add($"{EMPTY_RESULTS_RESPONSE} {scrubbedInput}");
-                return photosReceived;
+                return new List<string>() { $"{EMPTY_RESULTS_RESPONSE} {scrubbedInput}" };
             }
 
             var album = JsonConvert.DeserializeObject<IEnumerable<Photo>>(json);
@@ -75,10 +68,8 @@ namespace PhotoAlbum.App
         /// </summary>
         /// <param name="userInput">Raw user input from the command line.</param>
         /// <returns>If bad input is detected an error message will be returned to the caller.</returns>
-        private static List<string> ScrubUserInput(ref string? userInput)
+        private static string ScrubUserInput(ref string? userInput)
         {
-            List<string> errorMessages = new();
-
             bool isEmpty = userInput == null || userInput == string.Empty;
             bool isNumeric = int.TryParse(userInput, out int id);
 
@@ -87,13 +78,12 @@ namespace PhotoAlbum.App
 
             if (isEmpty || !isNumeric || isNegative) 
             {
-                errorMessages.Add(BAD_INPUT_RESPONSE);
-                return errorMessages;
+                return BAD_INPUT_RESPONSE;
             }
 
             // No errors found and user input is valid
             userInput = id.ToString();
-            return errorMessages;
+            return string.Empty;
         }
     }
 }
