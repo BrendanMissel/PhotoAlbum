@@ -1,8 +1,14 @@
+using Newtonsoft.Json;
+using PhotoAlbum.App.Model;
+using System.Text.Json.Serialization;
+
 namespace PhotoAlbum.App
 {
     public class PhotoAlbumService
     {
+        private const string BASE_PHOTO_ALBUM_URL = @"https://jsonplaceholder.typicode.com/photos?albumId=";
         private const string BAD_INPUT_RESPONSE = "Input invalid: Please enter a numeric album id.";
+        
         public IEnumerable<string> GetPhotosByAlbumId(string? userInput)
         {
             List<string> photos = new();
@@ -14,6 +20,19 @@ namespace PhotoAlbum.App
                 return photos;
             }
 
+            HttpClient client = new();
+            var response = client.GetStringAsync(BASE_PHOTO_ALBUM_URL + userInput);
+
+            string json = response.Result;
+            var photoCollection = JsonConvert.DeserializeObject<IEnumerable<Photo>>(json);
+
+            if (photoCollection != null)
+            {
+                foreach (Photo pic in photoCollection)
+                {
+                    photos.Add($"[{pic.Id}] {pic.Title}");
+                }
+            }
 
             return photos;
         }
