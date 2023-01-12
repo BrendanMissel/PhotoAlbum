@@ -16,19 +16,15 @@ public class PhotoAlbumServiceTests
     [InlineData("0")]
     public void GetPhotosByAlbumId_HandlesBadInput(string? input)
     {
-        PhotoAlbumService albumService = new();
-
-        IEnumerable<string> actual = albumService.GetPhotosByAlbumId(input);
+        IEnumerable<string> actual = PhotoAlbumService.GetPhotosByAlbumId(input);
 
         Assert.Equivalent(EXPECTED_BAD_INPUT_RESPONSE, actual);
     }
 
     [Fact]
     public void GetPhotosByAlbumId_ReturnsInCorrectFormat()
-    {
-        PhotoAlbumService albumService = new();
-    
-        IEnumerable<string> photos = albumService.GetPhotosByAlbumId("1");
+    {    
+        IEnumerable<string> photos = PhotoAlbumService.GetPhotosByAlbumId("1");
         string? actual = photos.FirstOrDefault();
 
         Assert.Equal(EXPECTED_OUTPUT_PHOTO_ID_1, actual);
@@ -39,10 +35,9 @@ public class PhotoAlbumServiceTests
     [InlineData("2147483647")]
     public void GetPhotosByAlbumId_HandlesNoResults(string? input)
     {
-        PhotoAlbumService albumService = new();
         List<string> expected = new() { $"{EXPECTED_NO_OUTPUTS_RESPONSE} {input}" };
 
-        IEnumerable<string> actual = albumService.GetPhotosByAlbumId(input);
+        IEnumerable<string> actual = PhotoAlbumService.GetPhotosByAlbumId(input);
 
         Assert.Equivalent(expected, actual);
     }
