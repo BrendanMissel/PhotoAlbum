@@ -7,10 +7,16 @@ namespace PhotoAlbum.App
         {
             List<string> photos = new();
             int id = -1;
-            if (userInput == null || userInput == string.Empty || !int.TryParse(userInput, out id))
+
+            bool isEmpty = userInput == null || userInput == string.Empty;
+            bool isNumeric = int.TryParse(userInput, out id);
+
+            // Here, I'm assuming the index starts at 1 (rather than 0) as the full dataset shows
+            if (isEmpty || (isNumeric && id <= 0) || !isNumeric) 
             {
                 photos.Add(BAD_INPUT_RESPONSE);
                 return photos;
+
             }
 
             return photos;

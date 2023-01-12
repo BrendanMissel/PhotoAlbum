@@ -13,6 +13,7 @@ public class PhotoAlbumServiceTests
     [InlineData("@")]
     [InlineData("A1")]
     [InlineData("-9")]
+    [InlineData("0")]
     public void GetPhotosByAlbumId_HandlesBadInput(string? input)
     {
         PhotoAlbumService albumService = new();
