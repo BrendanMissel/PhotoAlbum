@@ -1,3 +1,4 @@
+using PhotoAlbum.App;
 using static PhotoAlbum.Test.ExpectedResults;
 
 namespace PhotoAlbum.Test;
