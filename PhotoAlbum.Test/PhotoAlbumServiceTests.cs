@@ -33,4 +33,17 @@ public class PhotoAlbumServiceTests
 
         Assert.Equal(EXPECTED_OUTPUT_PHOTO_ID_1, actual);
     }
+
+    [Theory]
+    [InlineData("100000")]
+    [InlineData("234567")]
+    public void GetPhotosByAlbumId_HandlesNoResults(string? input)
+    {
+        PhotoAlbumService albumService = new();
+        List<string> expected = new() { EXPECTED_NO_OUTPUTS_RESPONSE + " " + input };
+
+        IEnumerable<string> actual = albumService.GetPhotosByAlbumId(input);
+
+        Assert.Equivalent(expected, actual);
+    }
 }
