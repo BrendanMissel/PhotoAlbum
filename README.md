@@ -6,7 +6,7 @@ This program is a console application that retrieves and displays photo IDs and 
 
 ## Prerequisites
 
-This program was created with .NET 7 and requires the .NET SDK to be installed.
+This program was created with .NET 7.0 and requires the .NET SDK to be installed.
 
 ## How to Build
 
