@@ -25,7 +25,7 @@ To run the unit tests, run the following command in a terminal from the top leve
 
 
 ## How to Run
-This project expects one command line argument: the album id shown below as `X`.
+This project expects one command line argument: the album id shown below as `X`. `X` should a positive numeric value.
 
 To run this project, run the following command in a terminal from the top level folder:
 
